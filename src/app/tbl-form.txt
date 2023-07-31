@@ -1,0 +1,109 @@
+ <div className='container'>
+        <table className='table table-bordered table-hover table-info mt-5 text-center'>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+
+
+      ===============================
+
+
+      import React from "react";
+import Data from "./User.json";
+import { useState } from "react";
+
+export default function Data_Pagination() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemPerPage, setItemsPerPage] = useState(10);
+  const [totalItems] = useState(100);
+
+  const totalPages = Math.ceil(totalItems / itemPerPage);
+  const startIndex = (currentPage - 1) * itemPerPage;
+  const endIndex = startIndex + itemPerPage;
+
+  const displayedItems = Data.slice(startIndex, endIndex);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handleItemsPerPageChange = (event) => {
+    const abc = parseInt(event.target.value, 10);
+    setItemsPerPage(abc);
+    setCurrentPage(1);
+  };
+
+  const renderPaginationDropdown = () => {
+    return (
+      <select value={itemPerPage} onChange={handleItemsPerPageChange}>
+        <option value={5}>5 item per page</option>
+        <option value={10}>10 items per page</option>
+        <option value={20}>20 items per page</option>
+      </select>
+    );
+  };
+
+  return (
+    <>
+      <div className="container">
+        <div className="pagination-container d-flex">
+          <div>
+            <button
+              type="button"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+          </div>
+          <div>items : {renderPaginationDropdown()}</div>
+          <div>
+            <button
+              type="button"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              next
+            </button>
+          </div>
+        </div>
+        <table className="table table-bordered table-hover table-info mt-5 text-center">
+          <thead>
+            <tr>
+              <th>userId</th>
+              <th>id</th>
+              <th>title</th>
+            </tr>
+          </thead>
+          <tbody>
+            {displayedItems.map((value) => (
+              <tr key={value.id}>
+                <td>{value.userId}</td>
+                <td>{value.id}</td>
+                <td>{value.title}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
