@@ -58,6 +58,72 @@ export default function page() {
         deleteRecord(data);
     };
 
+    // ============ ** pagination ** ===========
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemPerPage, setItemPerPage] = useState(10);
+
+    const [totalItems] = useState(100);
+    const totalPage = Math.ceil(totalItems / itemPerPage);
+
+    const startIndex = (currentPage - 1) * itemPerPage;
+    const endIndex = startIndex + itemPerPage;
+
+    const displayedItem = records.slice(startIndex, endIndex);
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPage) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePageRender = (event) => {
+        const abc = parseInt(event.target.value, 10);
+        setItemPerPage(abc);
+        setCurrentPage(1);
+    };
+
+    const handleDropDown = () => {
+        return (
+            <select value={itemPerPage} onChange={handlePageRender}>
+                <option value={1}>1 Items per page</option>
+                <option value={2}>2 Items per page</option>
+                <option value={5}>5 Items per page</option>
+                <option value={10}>10 Items per page</option>
+                <option value={20}>20 Items per page</option>
+            </select>
+        );
+    };
+
+
+    // ============== ** filter search ** ===================
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleSearch = (event) => {
+        const value = event.target.value;
+        setSearchTerm(value);
+      
+        // Filter the records based on the search term
+        const filteredRecords = records.filter((record) =>
+          record.fname.toLowerCase().includes(value.toLowerCase()) ||
+          record.lname.toLowerCase().includes(value.toLowerCase()) ||
+          record.email.toLowerCase().includes(value.toLowerCase()) ||
+          record.country.toLowerCase().includes(value.toLowerCase()) ||
+          record.city.toLowerCase().includes(value.toLowerCase()) ||
+          record.state.toLowerCase().includes(value.toLowerCase()) ||
+          record.zip.toLowerCase().includes(value.toLowerCase())
+        );
+      
+        setRecords(filteredRecords);
+      };
+      
 
     return (
         <>
@@ -181,6 +247,32 @@ export default function page() {
                         <div className="p-1.5 min-w-full inline-block align-middle">
                             <div className="border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
 
+                                <div className="py-3 px-4">
+                                    <div className="relative max-w-xs">
+                                        <label className="sr-only">Search</label>
+                                        <input
+                                            type="text"
+                                            name="hs-table-with-pagination-search"
+                                            id="hs-table-with-pagination-search"
+                                            className="p-3 pl-10 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                            placeholder="Search for items"
+                                            value={searchTerm}
+                                            onChange={handleSearch}
+                                        />
+                                        <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-4">
+                                            <svg
+                                                className="h-3.5 w-3.5 text-gray-400"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                fill="currentColor"
+                                                viewBox="0 0 16 16"
+                                            >
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="overflow-hidden">
                                     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                         <thead className="bg-gray-50 dark:bg-gray-700">
@@ -244,7 +336,7 @@ export default function page() {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                                            {records.map((value) => (
+                                            {displayedItem.map((value) => (
                                                 <tr key={value.id}>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                                                         {value.fname}
@@ -312,7 +404,29 @@ export default function page() {
                                         </tbody>
                                     </table>
                                 </div>
+                                <div className="py-1 px-4">
+                                    <div className="flex items-center space-x-2">
+                                        <button
+                                            className="px-3 py-1.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+                                            type="button"
+                                            onClick={handlePreviousPage}
+                                            disabled={currentPage === 1}
+                                        >
+                                            previous
+                                        </button>
 
+                                        <p>pagination {handleDropDown()}</p>
+
+                                        <button
+                                            className="px-3 py-1.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+                                            type="button"
+                                            onClick={handleNextPage}
+                                            disabled={currentPage === totalPage}
+                                        >
+                                            Next
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

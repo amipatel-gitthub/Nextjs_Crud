@@ -1,3 +1,25 @@
+  <div className="mx-auto mt-40 border p-3 sm:max-w-md md:max-w-lg">
+        <form>
+          <div className="flex items-center   py-2">
+            <input
+              className="border-purple-700 mr-3 leading-tight block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2  appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-500 focus:outline-none focus:ring-0 focus:border-purple-600 peer"
+              type="text"
+              placeholder="Enter your name"
+              aria-label="Full name"
+              name="uname"
+            />
+            <button
+              type="submit"
+              className="flex-shrink-0 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
+            >
+              Add
+            </button>
+          </div>
+        </form>
+      </div> 
+
+ 
+ 
  <div className="container">
         <div className="mx-auto mt-5 border p-3" style={{ width: "600px" }}>
           <form>
