@@ -61,10 +61,10 @@ export default function page() {
     // ============ ** pagination ** ===========
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(10);
+    const [itemPerPage, setItemPerPage] = useState(1);
 
     const [totalItems] = useState(100);
-    const totalPage = Math.ceil(totalItems / itemPerPage);
+    const totalPages = Math.ceil(totalItems / itemPerPage);
 
     const startIndex = (currentPage - 1) * itemPerPage;
     const endIndex = startIndex + itemPerPage;
@@ -78,7 +78,7 @@ export default function page() {
     };
 
     const handleNextPage = () => {
-        if (currentPage < totalPage) {
+        if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
     };
@@ -421,7 +421,7 @@ export default function page() {
                                             className="px-3 py-1.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
                                             type="button"
                                             onClick={handleNextPage}
-                                            disabled={currentPage === totalPage}
+                                            disabled={currentPage === totalPages}
                                         >
                                             Next
                                         </button>
