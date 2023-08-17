@@ -54,7 +54,7 @@ export default function page() {
     }
 
     const deleteRecord = (id) => {
-        const up_data = records.filter((value) => value.id !== id)
+        const up_data = records.filter((value) => value.id  !== id)
         setRecords(up_data)
     }
 
