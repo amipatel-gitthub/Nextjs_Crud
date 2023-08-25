@@ -1,107 +1,98 @@
 "use client";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [formData, setFormData] = useState({});
-  const [records, setRecords] = useState([]);
-
-  const [searchRecord, setSearchRecord] = useState('')
-
-  const handleSearch = (e) => {
-    setSearchRecord(e.target.value)
-  }
-
-  const filterSearchRecord = records.filter((record) => 
-    record.uname.toLocaleLowerCase().includes(searchRecord.toLocaleLowerCase())
-  )
-  
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("UserData : ", formData);
-
-    localStorage.setItem("next-Formik_userData", JSON.stringify(records));
-
-    createRecord(formData);
-
-    setFormData({});
-  };
-
-  const createRecord = (data) => {
-    const id = Date.now().toString();
-    const newRecord = { ...data, id };
-    setRecords([...records, newRecord]);
-  };
-
-  // ========== ** search query **============
-
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="">
-        <h1 className="text-center mt-10 font-bold">
-          Dummy project to learn Next-Formik
-        </h1>
-        <h2 className="text-center mt-10 underline font-semibold ">
-          Property table
-        </h2>
+    <>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto mt-20">
-          <div className="flex items-center border-b border-teal-500 py-2">
-            <input
-              className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-              type="text"
-              placeholder="enter your name"
-              aria-label="Full name"
-              name="uname"
-              value={formData.uname || ""}
-              onChange={handleChange}
-            />
-            <button
-              type="submit"
-              className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-            >
-              Add
-            </button>
-          </div>
-        </form>
-
-        <input type="text" placeholder="search..." className="mt-10"
-        value={searchRecord}
-        onChange={handleSearch}
-        />
-
-        <table className="min-w-full text-left text-sm font-light mt-20 bg-white border text-center">
-          <thead className="border-b font-medium dark:border-neutral-500">
-            <tr>
-              <th scope="col" className="px-6 py-4">
-                User Name
-              </th>
-              {/* <th scope="col" className="px-6 py-4">
-                action
-              </th> */}
-            </tr>
-          </thead>
-          <tbody>
-            {filterSearchRecord.map((value) => (
-              <tr
-                key={value.id}
-                className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
-              >
-                <td className="whitespace-nowrap px-6 py-4">{value.uname}</td>
-                {/* <td className="whitespace-nowrap px-6 py-4">.....</td> */}
+      <div className="bg-gradient-to-r from-blue-400 to-purple-600 text-white min-h-screen flex flex-col justify-center items-center font-sans">
+        <header className="text-6xl font-extrabold mb-8">
+          Welcome to <span className="text-yellow-300">Creative<span className="text-yellow-500">Land</span></span>!
+        </header>
+        <section className="text-center">
+          <p className="text-xl mb-10">
+            Embark on a journey into the realm of imagination and creativity with us.
+          </p>
+        </section>
+        <div className="overflow-hidden w-full max-w-3xl">
+          <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+            <tbody className="divide-y divide-gray-300 dark:divide-gray-700">
+              <tr className="hover:bg-blue-300 transition-colors">
+                <td className="px-6 py-4">
+                  <Link href="/Crud" className="btn-link">
+                    CRUD
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+                  <Link href="/Demo" className="btn-link">
+                    Demo
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+                  <Link href="/Form" className="btn-link">
+                    Form
+                  </Link>
+                </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
+              <tr className="hover:bg-blue-300 transition-colors">
+                <td className="px-6 py-4">
+                  <Link href="/Full_Form" className="btn-link">
+                    Full Form
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+                  <Link href="/Last_Page" className="btn-link">
+                    Last Page
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+                  <Link href="/Selfmade" className="btn-link">
+                    Selfmade
+                  </Link>
+                </td>
+              </tr>
+              <tr className="hover:bg-blue-300 transition-colors">
+                <td className="px-6 py-4">
+                  <Link href="/Table" className="btn-link">
+                    Table
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+                  <Link href="/U_Table" className="btn-link">
+                    User Table
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+                  <Link href="/User" className="btn-link">
+                    User
+                  </Link>
+                </td>
+              </tr>
+              <tr className="hover:bg-blue-300 transition-colors">
+                <td className="px-6 py-4">
+                  <Link href="/Code" className="btn-link">
+                    Code
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+                  <Link href="/react_Form" className="btn-link">
+                    react_Form
+                  </Link>
+                </td>
+                <td className="px-6 py-4">
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </main>
+
+
+
+
+
+    </>
   );
 }

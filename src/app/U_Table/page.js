@@ -15,7 +15,7 @@ export default function Page() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault();  
     console.log("Form Data : ", formData);
 
     localStorage.setItem("User_Table", JSON.stringify(records));
